@@ -1,4 +1,6 @@
-tsnake
+T-Snake
 ======
 
-web
+<!-- language:console -->
+
+  $ sudo apt-get install apache2
