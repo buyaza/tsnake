@@ -1,28 +1,44 @@
-CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Active Record, Association Data Mapping, Front Controller and MVC. Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
+T-Snake
+=======
 
-The Cake Software Foundation - promoting development related to CakePHP
-http://cakefoundation.org/
+Installation
 
-CakePHP - the rapid development PHP framework
-http://www.cakephp.org
+    $ sudo apt-get install apache2
+    $ sudo apt-get install php5
+    $ sudo apt-get install postgresql
+    $ sudo apt-get install pgadmin3
 
-Cookbook - user documentation for learning about CakePHP
-http://book.cakephp.org
+Config apache2
 
-API - quick reference to CakePHP
-http://api.cakephp.org
+    $ sudo a2enmod rewrite
+    
+Open file /etc/apache2/sites-enabled/000-default and change AllowOverride None to AllowOverride All
 
-The Bakery - everything CakePHP
-http://bakery.cakephp.org
+    $ sudo vim /etc/apache2/sites-enabled/000-default
+    
+    <Directory /var/www/>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+    
+    $ sudo /etc/init.d/apache2 restart
+    
+Config Postgresql
 
-The Show - live and archived podcasts about CakePHP and more
-http://live.cakephp.org
+    $ sudo passwd postgres
+    $ sudo su postgres
+    $ psql
+      # ALTER USER postgres WITH PASSWORD 'postgres';
+      # CREATE USER cakephp WITH PASSWORD 'cakephp';
+      # ALTER USER cakephp CREATEDB;
 
-CakePHP TV - screen casts from events and video tutorials
-http://tv.cakephp.org
+Config tsnake
 
-CakePHP Google Group - community mailing list and forum
-http://groups.google.com/group/cake-php
+    $ sudo chown user /var/www
+    $ cd /var/www
+    $ git clone git://github.com/Bayasgalan/tsnake.git
+    $ cd tsnake
+    $ chown -R www-data app/tmp
 
-#cakephp on irc.freenode.net - chat with CakePHP developers
-irc://irc.freenode.net/cakephp
