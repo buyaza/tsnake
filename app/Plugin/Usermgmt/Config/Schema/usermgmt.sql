@@ -1,62 +1,108 @@
-CREATE TABLE IF NOT EXISTS `login_tokens` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `token` char(32) NOT NULL,
-  `duration` varchar(32) NOT NULL,
-  `used` tinyint(1) NOT NULL DEFAULT '0',
-  `created` datetime NOT NULL,
-  `expires` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+/*------------- login_tokens -------------*/
+CREATE TABLE login_tokens (
+  id integer NOT NULL,
+  user_id integer NOT NULL,
+  token character varying(32) NOT NULL,
+  duration character varying(32) NOT NULL,
+  used smallint NOT NULL DEFAULT '0',
+  created date NOT NULL,
+  expires date NOT NULL,
+  CONSTRAINT login_tokens_primary_key PRIMARY KEY (id )
+);
+
+CREATE SEQUENCE login_tokens_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+
+ALTER TABLE login_tokens
+ALTER COLUMN id
+SET DEFAULT NEXTVAL('login_tokens_id_seq');
 
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_group_id` int(11) unsigned DEFAULT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `first_name` varchar(100) DEFAULT NULL,
-  `last_name` varchar(100) DEFAULT NULL,
-  `active` varchar(3) DEFAULT '0',
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user` (`username`),
-  KEY `mail` (`email`),
-  KEY `users_FKIndex1` (`user_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+/*------------- users -------------*/
+CREATE TABLE users (
+  id integer NOT NULL,
+  user_group_id integer,
+  username character varying(100),
+  password character varying(255),
+  email character varying(100),
+  first_name character varying(100),
+  last_name character varying(100),
+  active character varying(3) DEFAULT '0',
+  created date DEFAULT NULL,
+  modified date DEFAULT NULL,
+  CONSTRAINT users_primary_key PRIMARY KEY (id, username, email, user_group_id )
+);
 
+CREATE SEQUENCE users_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 2
+  CACHE 1;
 
-INSERT INTO `users` (`id`, `user_group_id`, `username`, `password`, `email`, `first_name`, `last_name`, `active`, `created`, `modified`) VALUES
+ALTER TABLE users
+ALTER COLUMN id
+SET DEFAULT NEXTVAL('users_id_seq');
+
+INSERT INTO users (id, user_group_id, username, password, email, first_name, last_name, active, created, modified) VALUES
 (1, 1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin@admin.com', 'Admin', NULL, '1', now(), now());
 
 
-CREATE TABLE IF NOT EXISTS `user_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `alias_name` varchar(100) DEFAULT NULL,
-  `allowRegistration` int(1) NOT NULL DEFAULT '1',
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+/*------------- user_groups -------------*/
+CREATE TABLE user_groups (
+  id integer NOT NULL,
+  name character varying(100),
+  alias_name varchar(100) DEFAULT NULL,
+  allow_registration boolean,
+  created date,
+  modified date,
+  CONSTRAINT user_groups_primary_key PRIMARY KEY (id)
+);
 
-INSERT INTO `user_groups` (`id`, `name`, `alias_name`, `allowRegistration`, `created`, `modified`) VALUES
-(1, 'Admin', 'Admin', 0, now(), now()),
-(2, 'User', 'User', 1, now(), now()),
-(3, 'Guest', 'Guest', 0, now(), now());
+CREATE SEQUENCE user_groups_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 4
+  CACHE 1;
 
-CREATE TABLE IF NOT EXISTS `user_group_permissions` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_group_id` int(10) unsigned NOT NULL,
-  `controller` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `action` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `allowed` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=70 ;
+ALTER TABLE user_groups
+ALTER COLUMN id
+SET DEFAULT NEXTVAL('user_groups_id_seq');
 
-INSERT INTO `user_group_permissions` (`id`, `user_group_id`, `controller`, `action`, `allowed`) VALUES
+INSERT INTO user_groups (id, name, alias_name, allow_registration, created, modified) VALUES
+(1, 'Admin', 'Admin', false, now(), now()),
+(2, 'User', 'User', true, now(), now()),
+(3, 'Guest', 'Guest', false, now(), now());
+
+
+/*------------- user_group_permissions -------------*/
+CREATE TABLE user_group_permissions (
+  id integer NOT NULL,
+  user_group_id integer NOT NULL,
+  controller character varying(50) NOT NULL,
+  action character varying(100) NOT NULL,
+  allowed smallint NOT NULL DEFAULT '1',
+  CONSTRAINT user_group_permissions_primary_key PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE user_group_permissions_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 70
+  CACHE 1;
+
+ALTER TABLE user_group_permissions
+ALTER COLUMN id
+SET DEFAULT NEXTVAL('user_group_permissions_id_seq');
+
+
+INSERT INTO user_group_permissions (id, user_group_id, controller, action, allowed) VALUES
 (1, 1, 'Pages', 'display', 1),
 (2, 2, 'Pages', 'display', 1),
 (3, 3, 'Pages', 'display', 1),

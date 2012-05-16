@@ -50,7 +50,7 @@
 								echo "<td>".h($row['UserGroup']['name'])."</td>";
 								echo "<td>".h($row['UserGroup']['alias_name'])."</td>";
 								echo "<td>";
-								if ($row['UserGroup']['allowRegistration']) {
+								if ($row['UserGroup']['allow_registration']) {
 									echo "Yes";
 								} else {
 									echo "No";

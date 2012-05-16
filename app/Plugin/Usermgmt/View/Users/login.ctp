@@ -45,7 +45,7 @@
 					</div>
 					<div>
 					<?php   if(!isset($this->request->data['User']['remember']))
-								$this->request->data['User']['remember']=true;
+								$this->request->data['User']['remember']=false;
 					?>
 						<div class="umstyle3"><?php echo __('Remember me');?></div>
 						<div class="umstyle4"><?php echo $this->Form->input("remember" ,array("type"=>"checkbox",'label' => false))?></div>
