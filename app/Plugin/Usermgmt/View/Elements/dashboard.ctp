@@ -30,6 +30,7 @@
 	<div style="float:left;padding-left:10px"><?php echo $this->Html->link(__("Edit Profile",true),"/editUser/".$this->UserAuth->getUserId()) ?></div>
 <?php   } else {?>
 	<div style="float:left;padding-left:10px"><?php echo $this->Html->link(__("Profile",true),"/myprofile") ?></div>
+	<div style="float:left;padding-left:10px"><?php echo $this->Html->link(__("T-Snake",true),"/Pages/play") ?></div>
 <?php   } ?>
 	<div style="float:left;padding-left:10px"><?php echo $this->Html->link(__("Change Password",true),"/changePassword") ?></div>
 	<div style="float:right;padding-left:10px"><?php echo $this->Html->link(__("Sign Out",true),"/logout") ?></div>

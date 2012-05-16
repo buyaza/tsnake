@@ -31,34 +31,36 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
-/**
- * Controller name
- *
- * @var string
- */
+	/**
+	 * Controller name
+	 *
+	 * @var string
+	 */
 	public $name = 'Pages';
 
-/**
- * Default helper
- *
- * @var array
- */
+	/**
+	 * Default helper
+	 *
+	 * @var array
+	 */
 	public $helpers = array('Html', 'Session');
 
-/**
- * This controller does not use a model
- *
- * @var array
- */
+	/**
+	 * This controller does not use a model
+	 *
+	 * @var array
+	 */
 	public $uses = array();
 
-/**
- * Displays a view
- *
- * @param mixed What page to display
- * @return void
- */
+	/**
+	 * Displays a view
+	 *
+	 * @param mixed What page to display
+	 * @return void
+	 */
 	public function display() {
+		$this->redirect('/login');
+
 		$path = func_get_args();
 
 		$count = count($path);
@@ -78,5 +80,9 @@ class PagesController extends AppController {
 		}
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		$this->render(implode('/', $path));
+	}
+
+	public function play() {
+
 	}
 }
