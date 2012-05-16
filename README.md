@@ -31,8 +31,8 @@ Config Postgresql
     $ sudo su postgres
     $ psql
       # ALTER USER postgres WITH PASSWORD 'postgres';
-      # CREATE USER cakephp WITH PASSWORD 'cakephp';
-      # ALTER USER cakephp CREATEDB;
+      # CREATE USER tsnake WITH PASSWORD 'tsnake';
+      # ALTER USER tsnake CREATEDB;
 
 Config tsnake
 
